@@ -10,18 +10,24 @@ import (
 	"github.com/spf13/cobra"
 )
 
+var ignores []string
+
 // RootCmd represents the base command when called without any subcommands
 var RootCmd = &cobra.Command{
 	Use:   "sh",
 	Short: "sh validates shell files with both shellcheck and shfmt",
 	RunE: func(cmd *cobra.Command, args []string) error {
-		matches, err := zglob.Glob(`**/*.*sh`)
+		files, err := zglob.Glob(`**/*.*sh`)
 		if err != nil {
 			return err
 		}
 		var checks = sh.Checkers()
-		for _, file := range matches {
+		for _, file := range files {
 			status.Info(file)
+			if ignore(ignores, file) {
+				fmt.Printf("\n")
+				continue
+			}
 			var errors []error
 			for _, check := range checks {
 				if err := check.Check(file); err != nil {
@@ -36,9 +42,28 @@ var RootCmd = &cobra.Command{
 			for _, err := range errors {
 				fmt.Println(err)
 			}
+			fmt.Printf("\n\n")
 		}
 		return nil
 	},
+}
+
+func ignore(patterns []string, file string) bool {
+	for _, pattern := range patterns {
+		if ok, err := zglob.Match(pattern, file); ok && err == nil {
+			return true
+		}
+	}
+	return false
+}
+
+func init() {
+	RootCmd.PersistentFlags().StringSliceVar(
+		&ignores,
+		"ignore",
+		[]string{},
+		"ignore specific folder of file patterns",
+	)
 }
 
 // Execute adds all child commands to the root command sets flags appropriately.
