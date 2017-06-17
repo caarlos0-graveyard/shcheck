@@ -1,7 +1,7 @@
 #!/bin/sh
 set -e
 
-TAR_FILE="/tmp/sh.tar.gz"
+TAR_FILE="/tmp/shcheck.tar.gz"
 DOWNLOAD_URL="https://github.com/caarlos0/shcheck/releases/download"
 
 last_version() {
@@ -22,7 +22,7 @@ download() {
 	}
 	rm -f "$TAR_FILE"
 	curl -s -L -o "$TAR_FILE" \
-		"$DOWNLOAD_URL/$VERSION/sh_$(uname -s)_$(uname -m).tar.gz"
+		"$DOWNLOAD_URL/$VERSION/shcheck_$(uname -s)_$(uname -m).tar.gz"
 }
 
 download
