@@ -32,5 +32,5 @@ func (*shellcheck) Install() (string, error) {
 			shellcheckPath,
 		)
 	}
-	return "", fmt.Errorf("platform not supported: %v", runtime.GOOS)
+	return "", nil
 }
