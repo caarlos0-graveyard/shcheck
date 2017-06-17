@@ -2,7 +2,6 @@ package sh
 
 import (
 	"fmt"
-	"os"
 	"os/exec"
 	"runtime"
 )
@@ -13,12 +12,12 @@ type shellcheck struct {
 }
 
 // Check a file with shellcheck
-func (*shellcheck) Check(file string) error {
-	var shellcheck = "shellcheck"
-	if _, err := os.Stat(shellcheckPath); err == nil {
-		shellcheck = shellcheckPath
+func (s *shellcheck) Check(file string) error {
+	bin, err := binaryFor(s, "shellcheck")
+	if err != nil {
+		return err
 	}
-	out, err := exec.Command(shellcheck, "-x", file).CombinedOutput()
+	out, err := exec.Command(bin, "-x", file).CombinedOutput()
 	if err == nil {
 		return nil
 	}

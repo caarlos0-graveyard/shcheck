@@ -4,7 +4,6 @@ import "os/exec"
 import "fmt"
 import "io/ioutil"
 import "runtime"
-import "os"
 
 type shfmt struct {
 }
@@ -12,10 +11,10 @@ type shfmt struct {
 const shfmtPath = "/tmp/shfmt"
 
 // Check a file with shfmt
-func (*shfmt) Check(file string) error {
-	var shfmt = "shfmt"
-	if _, err := os.Stat(shfmtPath); err == nil {
-		shfmt = shfmtPath
+func (s *shfmt) Check(file string) error {
+	shfmt, err := binaryFor(s, "shfmt")
+	if err != nil {
+		return err
 	}
 	out, err := exec.Command(shfmt, file).CombinedOutput()
 	if err != nil {
