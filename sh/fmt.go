@@ -3,13 +3,21 @@ package sh
 import "os/exec"
 import "fmt"
 import "io/ioutil"
+import "runtime"
+import "os"
 
 type shfmt struct {
 }
 
+const shfmtPath = "/tmp/shfmt"
+
 // Check a file with shfmt
 func (*shfmt) Check(file string) error {
-	out, err := exec.Command("shfmt", file).CombinedOutput()
+	var shfmt = "shfmt"
+	if _, err := os.Stat(shfmtPath); err == nil {
+		shfmt = shfmtPath
+	}
+	out, err := exec.Command(shfmt, file).CombinedOutput()
 	if err != nil {
 		return fmt.Errorf("shfmt failed: %v", string(out))
 	}
@@ -25,5 +33,11 @@ func (*shfmt) Check(file string) error {
 
 // Install shfmt
 func (*shfmt) Install() error {
-	return nil
+	if runtime.GOOS != "linux" {
+		return download(
+			"https://github.com/mvdan/sh/releases/download/v1.3.1/shfmt_v1.3.1_linux_amd64",
+			shfmtPath,
+		)
+	}
+	return fmt.Errorf("platform not supported: %v", runtime.GOOS)
 }

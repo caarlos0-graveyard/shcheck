@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/caarlos0/sh/print"
 	"github.com/caarlos0/sh/sh"
+	"github.com/caarlos0/sh/status"
 	zglob "github.com/mattn/go-zglob"
 	"github.com/spf13/cobra"
 )
@@ -19,9 +19,9 @@ var RootCmd = &cobra.Command{
 		if err != nil {
 			return err
 		}
-		var checks = sh.All()
+		var checks = sh.Checkers()
 		for _, file := range matches {
-			print.Info(file)
+			status.Info(file)
 			var errors []error
 			for _, check := range checks {
 				if err := check.Check(file); err != nil {
@@ -29,10 +29,10 @@ var RootCmd = &cobra.Command{
 				}
 			}
 			if len(errors) == 0 {
-				print.Success(file)
+				status.Success(file)
 				continue
 			}
-			print.Fail(file)
+			status.Fail(file)
 			for _, err := range errors {
 				fmt.Println(err)
 			}

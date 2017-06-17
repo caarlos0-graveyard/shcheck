@@ -1,14 +1,24 @@
 package sh
 
-import "os/exec"
-import "fmt"
+import (
+	"fmt"
+	"os"
+	"os/exec"
+	"runtime"
+)
+
+const shellcheckPath = "/tmp/shellcheck"
 
 type shellcheck struct {
 }
 
 // Check a file with shellcheck
 func (*shellcheck) Check(file string) error {
-	out, err := exec.Command("shellcheck", "-x", file).CombinedOutput()
+	var shellcheck = "shellcheck"
+	if _, err := os.Stat(shellcheckPath); err == nil {
+		shellcheck = shellcheckPath
+	}
+	out, err := exec.Command(shellcheck, "-x", file).CombinedOutput()
 	if err == nil {
 		return nil
 	}
@@ -17,5 +27,11 @@ func (*shellcheck) Check(file string) error {
 
 // Install shellcheck
 func (*shellcheck) Install() error {
-	return nil
+	if runtime.GOOS == "linux" {
+		return download(
+			"https://github.com/caarlos0/shellcheck-docker/releases/download/v0.4.6/shellcheck",
+			shellcheckPath,
+		)
+	}
+	return fmt.Errorf("platform not supported: %v", runtime.GOOS)
 }

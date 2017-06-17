@@ -1,0 +1,5 @@
+brew:
+  github:
+    owner: caarlos0
+    name: homebrew-tap
+  folder: Formula
