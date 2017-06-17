@@ -32,12 +32,12 @@ func (*shfmt) Check(file string) error {
 }
 
 // Install shfmt
-func (*shfmt) Install() error {
+func (*shfmt) Install() (string, error) {
 	if runtime.GOOS != "linux" {
-		return download(
+		return shfmtPath, download(
 			"https://github.com/mvdan/sh/releases/download/v1.3.1/shfmt_v1.3.1_linux_amd64",
 			shfmtPath,
 		)
 	}
-	return fmt.Errorf("platform not supported: %v", runtime.GOOS)
+	return "", fmt.Errorf("platform not supported: %v", runtime.GOOS)
 }

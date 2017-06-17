@@ -4,12 +4,13 @@ import (
 	"io"
 	"net/http"
 	"os"
+	"os/exec"
 )
 
 // Checker interface
 type Checker interface {
 	Check(file string) error
-	Install() error
+	Install() (string, error)
 }
 
 // Checkers all checkers
@@ -35,4 +36,12 @@ func download(url, target string) error {
 		return err
 	}
 	return os.Chmod(target, 0755)
+}
+
+func binaryFor(c Checker, name string) (s string, err error) {
+	s, err = exec.LookPath(name)
+	if err != nil {
+		return c.Install()
+	}
+	return
 }

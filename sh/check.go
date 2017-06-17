@@ -26,12 +26,12 @@ func (*shellcheck) Check(file string) error {
 }
 
 // Install shellcheck
-func (*shellcheck) Install() error {
+func (*shellcheck) Install() (string, error) {
 	if runtime.GOOS == "linux" {
-		return download(
+		return shellcheckPath, download(
 			"https://github.com/caarlos0/shellcheck-docker/releases/download/v0.4.6/shellcheck",
 			shellcheckPath,
 		)
 	}
-	return fmt.Errorf("platform not supported: %v", runtime.GOOS)
+	return "", fmt.Errorf("platform not supported: %v", runtime.GOOS)
 }
