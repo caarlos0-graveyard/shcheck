@@ -10,7 +10,7 @@ var installCmd = &cobra.Command{
 	Use:   "install",
 	Short: "quickly install the binaries to /tmp to use them later",
 	RunE: func(cmd *cobra.Command, args []string) error {
-		for _, check := range sh.All() {
+		for _, check := range sh.Checkers() {
 			if err := check.Install(); err != nil {
 				return err
 			}
