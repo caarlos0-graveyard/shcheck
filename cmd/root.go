@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/caarlos0/sh/sh"
-	"github.com/caarlos0/sh/status"
+	"github.com/caarlos0/shcheck/sh"
+	"github.com/caarlos0/shcheck/status"
 	zglob "github.com/mattn/go-zglob"
 	"github.com/spf13/cobra"
 )
@@ -16,10 +16,12 @@ var ignores []string
 var RootCmd = &cobra.Command{
 	Use:   "sh",
 	Short: "sh validates shell files with both shellcheck and shfmt",
-	RunE: func(cmd *cobra.Command, args []string) error {
+	Run: func(cmd *cobra.Command, args []string) {
+		var fail bool
 		files, err := zglob.Glob(`**/*.*sh`)
 		if err != nil {
-			return err
+			fmt.Println(err)
+			os.Exit(1)
 		}
 		var checks = sh.Checkers()
 		for _, file := range files {
@@ -43,8 +45,13 @@ var RootCmd = &cobra.Command{
 				fmt.Println(err)
 			}
 			fmt.Printf("\n\n")
+			fail = true
 		}
-		return nil
+
+		if fail {
+			fmt.Printf("\n\nsome checks failed. check logs above\n")
+			os.Exit(1)
+		}
 	},
 }
 

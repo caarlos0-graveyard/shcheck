@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"github.com/caarlos0/sh/sh"
+	"github.com/caarlos0/shcheck/sh"
 	"github.com/spf13/cobra"
 )
 
