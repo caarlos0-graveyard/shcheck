@@ -29,7 +29,7 @@
   branch = "master"
   name = "github.com/spf13/cobra"
   packages = ["."]
-  revision = "99ff9334bda26384b5ef4a4aaa4d444d29bdde73"
+  revision = "b4dbd37a01839e0653eec12aa4bbb2a2ce7b2a37"
 
 [[projects]]
   branch = "master"
