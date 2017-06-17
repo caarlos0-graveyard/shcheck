@@ -1,3 +1,10 @@
+archive:
+  name_template: '{{ .Binary }}_{{ .Os }}_{{ .Arch }}'
+  replacements:
+    darwin: Darwin
+    linux: Linux
+    386: i386
+    amd64: x86_64
 brew:
   github:
     owner: caarlos0
