@@ -9,9 +9,9 @@ last_version() {
 	# shellcheck disable=SC2089
 	test -z "$GITHUB_TOKEN" || header="-H 'Authorization: token $GITHUB_TOKEN'"
 	# shellcheck disable=SC2090,SC2086
-	curl -s $header https://api.github.com/repos/caarlos0/shcheck/releases/latest |
-		grep tag_name |
-		cut -f4 -d'"'
+	curl -s $header https://api.github.com/repos/caarlos0/shcheck/releases/latest \
+		| grep tag_name \
+		| cut -f4 -d'"'
 }
 
 download() {
