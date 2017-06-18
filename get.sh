@@ -6,7 +6,7 @@ DOWNLOAD_URL="https://github.com/caarlos0/shcheck/releases/download"
 
 get_latest() {
 	url="https://api.github.com/repos/caarlos0/shcheck/releases/latest"
-	if test -z "$GITHUB_TOKEN"; then
+	if test -n "$GITHUB_TOKEN"; then
 		curl --fail -sSL -H "Authorization: token $GITHUB_TOKEN" "$url"
 	else
 		curl --fail -sSL "$url"
