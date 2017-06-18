@@ -5,11 +5,12 @@ TAR_FILE="/tmp/shcheck.tar.gz"
 DOWNLOAD_URL="https://github.com/caarlos0/shcheck/releases/download"
 
 get_latest() {
-	header=""
-	# shellcheck disable=SC2089
-	test -z "$GITHUB_TOKEN" || header="-H 'Authorization: token $GITHUB_TOKEN'"
-	# shellcheck disable=SC2090,SC2086
-	curl -s $header https://api.github.com/repos/caarlos0/shcheck/releases/latest
+	url="https://api.github.com/repos/caarlos0/shcheck/releases/latest"
+	if test -z "$GITHUB_TOKEN"; then
+		curl --fail -sSL -H "Authorization: token $GITHUB_TOKEN" "$url"
+	else
+		curl --fail -sSL "$url"
+	fi
 }
 
 last_version() {
