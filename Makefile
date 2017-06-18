@@ -35,7 +35,10 @@ lint: ## Run all the linters
 		--deadline=10m \
 		./...
 
-ci: lint test ## Run all the tests and code checks
+run: ## Run shcheck against itself
+	go run main.go --ignore='vendor/**/*'
+
+ci: run lint test ## Run all the tests and code checks
 
 build: ## Build a beta version
 	go build -o sh .

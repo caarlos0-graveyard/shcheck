@@ -27,3 +27,5 @@ download() {
 
 download
 tar -xf "$TAR_FILE" -C /tmp
+# shellcheck disable=SC2048,SC2086
+/tmp/shcheck $*

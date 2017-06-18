@@ -16,4 +16,18 @@ We appreciate your contribution. Please refer to our [contributing guidelines](C
 [![Powered By: GoReleaser](https://img.shields.io/badge/powered%20by-goreleaser-green.svg?style=flat-square)](https://github.com/goreleaser)
 
 
-curl -sL https://git.io/shcheck | bash
+## Usage
+
+Just add it to your travis.yml:
+
+```yaml
+script:
+  - curl -sL https://git.io/shcheck | bash -s
+```
+
+You can also pass files and folders to be ignored, like this:
+
+```yaml
+script:
+  - curl -sL https://git.io/shcheck | bash -s -- --ignore=somefile.sh --ignore='folder/**/*'
+```
