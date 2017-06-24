@@ -16,9 +16,9 @@ func Fail(file string) {
 	print("FAIL", file, color.FgRed)
 }
 
-// Info status
-func Info(file string) {
-	print(" ?? ", file, color.FgWhite)
+// Ignore status
+func Ignore(file string) {
+	print("SKIP", file, color.FgWhite)
 }
 
 func print(text, file string, col color.Attribute) {
