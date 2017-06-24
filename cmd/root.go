@@ -23,35 +23,38 @@ var RootCmd = &cobra.Command{
 			fmt.Println(err)
 			os.Exit(1)
 		}
-		var checks = sh.Checkers()
 		for _, file := range files {
-			if ignore(ignores, file) {
-				status.Ignore(file)
-				continue
+			if err := check(file); err != nil {
+				fail = true
 			}
-			var errors []error
-			for _, check := range checks {
-				if err := check.Check(file); err != nil {
-					errors = append(errors, err)
-				}
-			}
-			if len(errors) == 0 {
-				status.Success(file)
-				continue
-			}
-			status.Fail(file)
-			for _, err := range errors {
-				fmt.Println(err)
-			}
-			fmt.Printf("\n\n")
-			fail = true
 		}
-
 		if fail {
-			fmt.Printf("\n\nsome checks failed. check logs above\n")
+			fmt.Printf("\nsome checks failed. check output above.\n")
 			os.Exit(1)
 		}
 	},
+}
+
+func check(file string) error {
+	if ignore(ignores, file) {
+		status.Ignore(file)
+		return nil
+	}
+	var errors []error
+	for _, check := range sh.Checkers() {
+		if err := check.Check(file); err != nil {
+			errors = append(errors, err)
+		}
+	}
+	if len(errors) == 0 {
+		status.Success(file)
+		return nil
+	}
+	status.Fail(file)
+	for _, err := range errors {
+		fmt.Println(err)
+	}
+	return fmt.Errorf("check failed")
 }
 
 func ignore(patterns []string, file string) bool {
