@@ -25,9 +25,8 @@ var RootCmd = &cobra.Command{
 		}
 		var checks = sh.Checkers()
 		for _, file := range files {
-			status.Info(file)
 			if ignore(ignores, file) {
-				fmt.Printf("\n")
+				status.Info(file)
 				continue
 			}
 			var errors []error

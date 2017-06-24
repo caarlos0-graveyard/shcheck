@@ -8,10 +8,28 @@
   version = "v1.1.0"
 
 [[projects]]
+  name = "github.com/fatih/color"
+  packages = ["."]
+  revision = "570b54cabe6b8eb0bc2dfce68d964677d63b5260"
+  version = "v1.5.0"
+
+[[projects]]
   branch = "master"
   name = "github.com/inconshreveable/mousetrap"
   packages = ["."]
   revision = "76626ae9c91c4f2a10f34cad8ce83ea42c93bb75"
+
+[[projects]]
+  name = "github.com/mattn/go-colorable"
+  packages = ["."]
+  revision = "941b50ebc6efddf4c41c8e4537a5f68a4e686b24"
+  version = "v0.0.8"
+
+[[projects]]
+  name = "github.com/mattn/go-isatty"
+  packages = ["."]
+  revision = "fc9e8d8ef48496124e79ae0df75490096eccf6fe"
+  version = "v0.0.2"
 
 [[projects]]
   branch = "master"
@@ -43,9 +61,15 @@
   packages = ["assert"]
   revision = "f6abca593680b2315d2075e0f5e2a9751e3f431a"
 
+[[projects]]
+  branch = "master"
+  name = "golang.org/x/sys"
+  packages = ["unix"]
+  revision = "c23410a886927bab8ca5e80b08af6a56faeb330d"
+
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "7ed2f8be332b34d31932a5c062993230bd87b4265d9fe9500f2f4e25ff0dc01c"
+  inputs-digest = "8e61387cf9e20531aeb4e1ae174c90620d5efcb261f76357b9ce22307492fddf"
   solver-name = "gps-cdcl"
   solver-version = 1

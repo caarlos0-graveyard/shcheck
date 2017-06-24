@@ -1,18 +1,30 @@
 package status
 
-import "fmt"
+import (
+	"fmt"
+
+	"github.com/fatih/color"
+)
 
 // Success status
 func Success(file string) {
-	fmt.Printf("\r  [ \033[00;32mOK\033[0m ] %s...\n", file)
+	print(" OK ", file, color.FgGreen)
 }
 
 // Fail status
 func Fail(file string) {
-	fmt.Printf("\r  [\033[0;31mFAIL\033[0m] %s...\n", file)
+	print("FAIL", file, color.FgRed)
 }
 
 // Info status
 func Info(file string) {
-	fmt.Printf("\r  [ \033[00;34m??\033[0m ] %s", file)
+	print(" ?? ", file, color.FgWhite)
+}
+
+func print(text, file string, col color.Attribute) {
+	fmt.Printf(
+		"[%s] %s\n",
+		color.New(col).Sprint(text),
+		color.New(color.Bold).Sprint(file),
+	)
 }
