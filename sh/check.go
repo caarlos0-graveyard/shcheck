@@ -4,11 +4,18 @@ import (
 	"fmt"
 	"os/exec"
 	"runtime"
+	"strings"
 )
 
 const shellcheckPath = "/tmp/shellcheck"
 
+// ShellcheckOptions pass down options to the shellcheck binary
+type ShellcheckOptions struct {
+	Exclude []string
+}
+
 type shellcheck struct {
+	options ShellcheckOptions
 }
 
 // Check a file with shellcheck
@@ -17,7 +24,12 @@ func (s *shellcheck) Check(file string) error {
 	if err != nil {
 		return err
 	}
-	out, err := exec.Command(bin, "-x", file).CombinedOutput()
+	var args = []string{"--external-sources"}
+	if len(s.options.Exclude) != 0 {
+		args = append(args, "--exclude", strings.Join(s.options.Exclude, ","))
+	}
+	args = append(args, file)
+	out, err := exec.Command(bin, args...).CombinedOutput()
 	if err == nil {
 		return nil
 	}

@@ -10,7 +10,10 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var ignores []string
+var (
+	ignores            []string
+	shellcheckExcludes []string
+)
 
 // RootCmd represents the base command when called without any subcommands
 var RootCmd = &cobra.Command{
@@ -40,8 +43,13 @@ func check(file string) error {
 		status.Ignore(file)
 		return nil
 	}
+	var options = sh.Options{
+		Shellcheck: sh.ShellcheckOptions{
+			Exclude: shellcheckExcludes,
+		},
+	}
 	var errors []error
-	for _, check := range sh.Checkers() {
+	for _, check := range sh.Checkers(options) {
 		if err := check.Check(file); err != nil {
 			errors = append(errors, err)
 		}
@@ -72,6 +80,12 @@ func init() {
 		"ignore",
 		[]string{},
 		"ignore specific folder of file patterns",
+	)
+	RootCmd.PersistentFlags().StringSliceVar(
+		&shellcheckExcludes,
+		"shellcheck-exclude",
+		[]string{},
+		"pass arguments to shellcheck --exclude option",
 	)
 }
 

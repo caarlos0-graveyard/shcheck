@@ -13,10 +13,15 @@ type Checker interface {
 	Install() (string, error)
 }
 
+// Options provides options to the underline checkers
+type Options struct {
+	Shellcheck ShellcheckOptions
+}
+
 // Checkers all checkers
-func Checkers() []Checker {
+func Checkers(opts Options) []Checker {
 	return []Checker{
-		&shellcheck{},
+		&shellcheck{opts.Shellcheck},
 		&shfmt{},
 	}
 }
