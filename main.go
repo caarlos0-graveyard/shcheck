@@ -20,10 +20,11 @@ var (
 func main() {
 	app.Version("shfmt version " + version)
 	kingpin.MustParse(app.Parse(os.Args[1:]))
-	var fail bool
+
 	files, err := zglob.Glob(`**/*.*sh`)
 	kingpin.FatalIfError(err, "fail to find all shell files")
 
+	var fail bool
 	for _, file := range files {
 		if err := check(file); err != nil {
 			fail = true

@@ -9,4 +9,5 @@ import (
 func TestIgnore(t *testing.T) {
 	var assert = assert.New(t)
 	assert.True(ignore([]string{"vendor/**/*"}, "vendor/blah/adad/asdasd"))
+	assert.False(ignore([]string{"vendor/**"}, "vendor/blah/adad/asdasd"))
 }
