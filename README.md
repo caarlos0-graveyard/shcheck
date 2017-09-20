@@ -1,4 +1,4 @@
-# sh
+# shcheck
 
 A tool to easily bind shellcheck and shfmt to your CI, so your
 shellscripts can be checked.

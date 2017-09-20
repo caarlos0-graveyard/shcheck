@@ -19,6 +19,8 @@ var (
 
 func main() {
 	app.Version("shfmt version " + version)
+	app.VersionFlag.Short('v')
+	app.HelpFlag.Short('h')
 	kingpin.MustParse(app.Parse(os.Args[1:]))
 
 	files, err := zglob.Glob(`**/*.*sh`)
