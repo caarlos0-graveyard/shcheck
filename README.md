@@ -29,5 +29,5 @@ You can also pass files and folders to be ignored, like this:
 
 ```yaml
 script:
-  - curl -sL https://git.io/shcheck | bash -s -- --ignore=somefile.sh --ignore='folder/**/*'
+  - curl -sL https://git.io/shcheck | bash -s -f -- --ignore=somefile.sh --ignore='folder/**/*'
 ```
