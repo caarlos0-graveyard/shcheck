@@ -34,7 +34,7 @@ func (s *shfmt) Check(file string) error {
 func (*shfmt) Install() (string, error) {
 	if runtime.GOOS == "linux" {
 		return shfmtPath, download(
-			"https://github.com/mvdan/sh/releases/download/v1.3.1/shfmt_v1.3.1_linux_amd64",
+			"https://github.com/mvdan/sh/releases/download/v2.0.0/shfmt_v2.0.0_linux_amd64",
 			shfmtPath,
 		)
 	}
