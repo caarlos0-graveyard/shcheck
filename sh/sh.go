@@ -1,10 +1,11 @@
 package sh
 
 import (
+	"fmt"
 	"io"
 	"net/http"
 	"os"
-	"os/exec"
+	"runtime"
 )
 
 // Checker interface
@@ -43,10 +44,13 @@ func download(url, target string) error {
 	return os.Chmod(target, 0755)
 }
 
-func binaryFor(c Checker, name string) (s string, err error) {
-	s, err = exec.LookPath(name)
-	if err != nil {
-		return c.Install()
+func install(urls map[string]string, path string) (string, error) {
+	var url = urls[runtime.GOOS+runtime.GOARCH]
+	if url == "" {
+		return "", fmt.Errorf("no binary for %s %s", runtime.GOOS, runtime.GOARCH)
 	}
-	return
+	if _, err := os.Stat(path); os.IsNotExist(err) {
+		return path, download(url, path)
+	}
+	return path, nil
 }
