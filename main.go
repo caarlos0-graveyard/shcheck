@@ -23,6 +23,7 @@ func main() {
 	app.HelpFlag.Short('h')
 	kingpin.MustParse(app.Parse(os.Args[1:]))
 
+	// TODO: also look for executables with a valid shell shebang
 	files, err := zglob.Glob(`**/*.*sh`)
 	kingpin.FatalIfError(err, "fail to find all shell files")
 
