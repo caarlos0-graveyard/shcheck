@@ -3,11 +3,8 @@ package sh
 import (
 	"fmt"
 	"os/exec"
-	"runtime"
 	"strings"
 )
-
-const shellcheckPath = "/tmp/shellcheck"
 
 // ShellcheckOptions pass down options to the shellcheck binary
 type ShellcheckOptions struct {
@@ -20,7 +17,7 @@ type shellcheck struct {
 
 // Check a file with shellcheck
 func (s *shellcheck) Check(file string) error {
-	bin, err := binaryFor(s, "shellcheck")
+	bin, err := s.Install()
 	if err != nil {
 		return err
 	}
@@ -38,11 +35,11 @@ func (s *shellcheck) Check(file string) error {
 
 // Install shellcheck
 func (*shellcheck) Install() (string, error) {
-	if runtime.GOOS == "linux" {
-		return shellcheckPath, download(
-			"https://github.com/caarlos0/shellcheck-docker/releases/download/v0.4.6/shellcheck",
-			shellcheckPath,
-		)
-	}
-	return "", nil
+	return install(
+		map[string]string{
+			"linuxamd64":  "https://github.com/caarlos0/shellcheck-docker/releases/download/v0.4.6/shellcheck",
+			"darwinamd64": "https://github.com/caarlos0/shellcheck-docker/releases/download/v0.4.6/shellcheck_darwin",
+		},
+		"/tmp/shellcheck",
+	)
 }

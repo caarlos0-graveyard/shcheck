@@ -14,9 +14,9 @@ get_latest() {
 }
 
 last_version() {
-	get_latest \
-		| grep tag_name \
-		| cut -f4 -d'"'
+	get_latest |
+		grep tag_name |
+		cut -f4 -d'"'
 }
 
 download() {

@@ -1,18 +1,19 @@
 package sh
 
-import "os/exec"
-import "fmt"
-import "io/ioutil"
-import "runtime"
+import (
+	"fmt"
+	"io/ioutil"
+	"os/exec"
+
+	"github.com/pmezard/go-difflib/difflib"
+)
 
 type shfmt struct {
 }
 
-const shfmtPath = "/tmp/shfmt"
-
 // Check a file with shfmt
 func (s *shfmt) Check(file string) error {
-	shfmt, err := binaryFor(s, "shfmt")
+	shfmt, err := s.Install()
 	if err != nil {
 		return err
 	}
@@ -24,19 +25,31 @@ func (s *shfmt) Check(file string) error {
 	if err != nil {
 		return fmt.Errorf("shfmt failed: %v", err)
 	}
-	if string(contents) != string(out) {
-		return fmt.Errorf("shfmt failed: file format is wrong, fix it with shfmt -w %v", file)
+	if string(out) == string(contents) {
+		return nil
 	}
-	return nil
+	diff, err := difflib.GetUnifiedDiffString(
+		difflib.UnifiedDiff{
+			A:        difflib.SplitLines(string(contents)),
+			B:        difflib.SplitLines(string(out)),
+			FromFile: "Original",
+			ToFile:   "Fixed",
+			Context:  3,
+		},
+	)
+	if err != nil {
+		return err
+	}
+	return fmt.Errorf("shfmt failed: file format is wrong, fix it with shfmt -w %s. diff:\n%s", file, diff)
 }
 
 // Install shfmt
 func (*shfmt) Install() (string, error) {
-	if runtime.GOOS == "linux" {
-		return shfmtPath, download(
-			"https://github.com/mvdan/sh/releases/download/v2.0.0/shfmt_v2.0.0_linux_amd64",
-			shfmtPath,
-		)
-	}
-	return "", nil
+	return install(
+		map[string]string{
+			"linuxamd64":  "https://github.com/mvdan/sh/releases/download/v2.0.0/shfmt_v2.0.0_linux_amd64",
+			"darwinamd64": "https://github.com/mvdan/sh/releases/download/v2.0.0/shfmt_v2.0.0_darwin_amd64",
+		},
+		"/tmp/shfmt",
+	)
 }
