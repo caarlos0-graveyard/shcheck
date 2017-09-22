@@ -36,7 +36,7 @@ lint: ## Run all the linters
 		./...
 
 run: ## Run shcheck against itself
-	go run main.go --ignore='vendor/**/*'
+	go run main.go --ignore='vendor/**/*' --ignore='sh/testdata/*.sh'
 
 ci: run lint test ## Run all the tests and code checks
 
