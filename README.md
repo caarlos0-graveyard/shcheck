@@ -31,3 +31,9 @@ You can also pass files and folders to be ignored, like this:
 script:
   - curl -sL https://git.io/shcheck | bash -s -f -- --ignore=somefile.sh --ignore='folder/**/*'
 ```
+
+Or with Docker:
+
+```sh
+docker run --rm -v `pwd`:/scripts --workdir=/scripts caarlos0/shcheck
+```
