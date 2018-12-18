@@ -10,6 +10,7 @@ import (
 	zglob "github.com/mattn/go-zglob"
 )
 
+// nolint: gochecknoglobals,lll
 var (
 	version            = "master"
 	app                = kingpin.New("shcheck", "shcheck validates your scripts against both shellcheck and shfmt")

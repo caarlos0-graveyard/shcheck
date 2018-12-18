@@ -47,8 +47,8 @@ func (s *shfmt) Check(file string) error {
 func (*shfmt) Install() (string, error) {
 	return install(
 		map[string]string{
-			"linuxamd64":  "https://github.com/mvdan/sh/releases/download/v2.0.0/shfmt_v2.0.0_linux_amd64",
-			"darwinamd64": "https://github.com/mvdan/sh/releases/download/v2.0.0/shfmt_v2.0.0_darwin_amd64",
+			"linuxamd64":  "https://github.com/mvdan/sh/releases/download/v2.6.2/shfmt_v2.6.2_linux_amd64",
+			"darwinamd64": "https://github.com/mvdan/sh/releases/download/v2.6.2/shfmt_v2.6.2_darwin_amd64",
 		},
 		"/tmp/shfmt",
 	)
