@@ -1,15 +1,15 @@
-archive:
-  name_template: '{{ .Binary }}_{{ .Os }}_{{ .Arch }}'
-  replacements:
-    darwin: Darwin
-    linux: Linux
-    386: i386
-    amd64: x86_64
-brew:
-  github:
-    owner: caarlos0
-    name: homebrew-tap
-  folder: Formula
+archives:
+  - name_template: '{{ .Binary }}_{{ .Os }}_{{ .Arch }}'
+    replacements:
+      darwin: Darwin
+      linux: Linux
+      386: i386
+      amd64: x86_64
+brews:
+  - folder: Formula
+    github:
+      owner: caarlos0
+      name: homebrew-tap
 dockers:
 - image_templates:
   - "caarlos0/shcheck:latest"
