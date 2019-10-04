@@ -33,7 +33,7 @@ func download(url, target string) error {
 		return err
 	}
 	defer func() { _ = out.Close() }()
-	resp, err := http.Get(url)
+	resp, err := http.Get(url) // nolint: gosec
 	if err != nil {
 		return err
 	}
