@@ -37,7 +37,7 @@ func (s *shellcheck) Check(file string) error {
 func (*shellcheck) Install() (string, error) {
 	return install(
 		map[string]string{
-			"linuxamd64":  "https://github.com/caarlos0/shellcheck-docker/releases/download/v0.7.0/shellcheck",
+			"linuxamd64":  "https://github.com/caarlos0/shellcheck-docker/releases/download/v0.7.0/shellcheck_linux",
 			"darwinamd64": "https://github.com/caarlos0/shellcheck-docker/releases/download/v0.7.0/shellcheck_darwin",
 		},
 		"/tmp/shellcheck",
