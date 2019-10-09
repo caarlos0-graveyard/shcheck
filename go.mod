@@ -10,7 +10,7 @@ require (
 	github.com/mattn/go-zglob v0.0.1
 	github.com/pmezard/go-difflib v1.0.0
 	github.com/stretchr/testify v1.4.0
-	golang.org/x/sys v0.0.0-20191003212358-c178f38b412c // indirect
+	golang.org/x/sys v0.0.0-20191009170203-06d7bd2c5f4f // indirect
 )
 
 go 1.13
