@@ -6,11 +6,10 @@ require (
 	github.com/alecthomas/units v0.0.0-20190924025748-f65c72e2690d // indirect
 	github.com/fatih/color v1.7.0
 	github.com/mattn/go-colorable v0.1.4 // indirect
-	github.com/mattn/go-isatty v0.0.9 // indirect
+	github.com/mattn/go-isatty v0.0.10 // indirect
 	github.com/mattn/go-zglob v0.0.1
 	github.com/pmezard/go-difflib v1.0.0
 	github.com/stretchr/testify v1.4.0
-	golang.org/x/sys v0.0.0-20191003212358-c178f38b412c // indirect
 )
 
 go 1.13
