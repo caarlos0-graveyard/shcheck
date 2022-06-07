@@ -7,7 +7,7 @@ require (
 	github.com/fatih/color v1.12.0
 	github.com/mattn/go-zglob v0.0.3
 	github.com/pmezard/go-difflib v1.0.0
-	github.com/stretchr/testify v1.7.0
+	github.com/stretchr/testify v1.7.2
 )
 
 go 1.13
